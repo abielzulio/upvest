@@ -6,9 +6,7 @@ import {
   useState,
 } from "react"
 
-export type CEvent<T> = ChangeEvent<T>
-
-export type DispatchState<T> = Dispatch<SetStateAction<T>>
+export type DispatchSetState<T> = Dispatch<SetStateAction<T>>
 
 export interface Item {
   id: string

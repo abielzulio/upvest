@@ -1,20 +1,21 @@
 import { useRouter } from "next/router"
+import { ChangeEvent } from "react"
 import { toast } from "react-hot-toast"
-import { CEvent, DispatchState, Item } from "type"
+import { DispatchSetState, Item } from "type"
 
 export const NewItemForm = ({
   item,
-  updateItem,
+  setItem,
   path,
 }: {
   item: Item
-  updateItem: DispatchState<Item>
+  setItem: DispatchSetState<Item>
   path: string
 }) => {
   const router = useRouter()
 
   const onSubmitForm = (
-    e: CEvent<HTMLFormElement>,
+    e: ChangeEvent<HTMLFormElement>,
     item: Item,
     path: string
   ) => {
@@ -52,8 +53,8 @@ export const NewItemForm = ({
           id="name"
           className="border-[1px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30"
           placeholder="Goals name"
-          onChange={(e: CEvent<HTMLInputElement>) =>
-            updateItem({ ...item, name: e.target.value })
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setItem({ ...item, name: e.target.value })
           }
         />
       </div>
@@ -66,8 +67,8 @@ export const NewItemForm = ({
           id="price"
           className="border-[1px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 focus-within:bor"
           placeholder="Price amount"
-          onChange={(e: CEvent<HTMLInputElement>) =>
-            updateItem({ ...item, price: Number(e.target.value) })
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setItem({ ...item, price: Number(e.target.value) })
           }
         />
       </div>
@@ -80,8 +81,8 @@ export const NewItemForm = ({
           id="initial"
           className="border-[1px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 focus-within:bor"
           placeholder="Initial amount"
-          onChange={(e: CEvent<HTMLInputElement>) =>
-            updateItem({ ...item, initial: Number(e.target.value) })
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setItem({ ...item, initial: Number(e.target.value) })
           }
         />
       </div>

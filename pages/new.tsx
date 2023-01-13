@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Item } from "type"
 
 const NewItemPage = () => {
-  const [item, updateItem] = useState<Item>({
+  const [item, setItem] = useState<Item>({
     id: nanoid(),
     name: "",
     price: 0,
@@ -15,7 +15,7 @@ const NewItemPage = () => {
       <h1 className="text-black text-[36px] font-medium pb-[48px]">
         What’s your investment goal?
       </h1>
-      <NewItemForm item={item} updateItem={updateItem} path="/welcome" />
+      <NewItemForm item={item} setItem={setItem} path="/welcome" />
     </div>
   )
 }
