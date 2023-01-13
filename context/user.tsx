@@ -26,7 +26,17 @@ export const UserProvider: React.FC<UserProviderProps> = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [items, setItems] = useState<Item[]>([])
+  const [items, setItems] = useState<Item[]>(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem(UPVEST.items)) {
+        return JSON.parse(
+          localStorage.getItem(UPVEST.items) as string
+        ) satisfies Item[]
+      } else {
+        return []
+      }
+    }
+  })
   const [userProfile, setUserProfile] = useState<UserProfileType>(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem(UPVEST.userProfile)) {
