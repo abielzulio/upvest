@@ -40,7 +40,7 @@ export const NewItemForm = ({
   }
   return (
     <form
-      className="flex flex-col gap-[16px] bg-black/5 text-black p-[24px] rounded-[20px] h-full"
+      className="flex flex-col gap-[16px] bg-black/[0.03] text-black p-[24px] rounded-[20px] h-full"
       onSubmit={(e) => onSubmitForm(e, item, path)}
     >
       <p className="text-[18px] font-semibold opacity-50">Goal details</p>
@@ -51,7 +51,7 @@ export const NewItemForm = ({
         <input
           type="name"
           id="name"
-          className="border-[1px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30"
+          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30"
           placeholder="Goals name"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setItem({ ...item, name: e.target.value })
@@ -65,7 +65,7 @@ export const NewItemForm = ({
         <input
           type="number"
           id="price"
-          className="border-[1px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 focus-within:bor"
+          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 focus-within:bor"
           placeholder="Price amount"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setItem({ ...item, price: Number(e.target.value) })
@@ -79,7 +79,7 @@ export const NewItemForm = ({
         <input
           type="number"
           id="initial"
-          className="border-[1px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 focus-within:bor"
+          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 focus-within:bor"
           placeholder="Initial amount"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setItem({ ...item, initial: Number(e.target.value) })
