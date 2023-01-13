@@ -12,15 +12,9 @@ const WelcomePage = () => {
             type="button"
             className="bg-black h-[64px] w-full text-white rounded-full border-[2px] border-transparent font-semibold transition hover:bg-transparent hover:border-black hover:text-black"
           >
-            Start My Journey
+            Connect RHB Account
           </button>
         </Link>
-        <button
-          type="button"
-          className="w-full rounded-full text-black font-semibold underline opacity-50 hover:opacity-100 transition-opacity"
-        >
-          Log in
-        </button>
       </div>
     </div>
   )
