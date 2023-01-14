@@ -1,7 +1,8 @@
 import { NewItemForm } from "components/Item"
 import { nanoid } from "nanoid"
-import { ChangeEvent, useEffect, useState } from "react"
-import { Item, UserProfileType } from "type"
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
+import UserContext from "context/user"
+import { DispatchSetState, Item, UserProfileType } from "type"
 
 const PROFILE_OPTIONS = {
   mastery: [
@@ -84,7 +85,11 @@ interface ProfileScore {
   status: number
 }
 
-const ProfileTypeQuiz = () => {
+const ProfileTypeQuiz = ({
+  setUserProfile,
+}: {
+  setUserProfile: DispatchSetState<UserProfileType>
+}) => {
   const [profileScore, setProfileScore] = useState<ProfileScore>({
     mastery: 1,
     risk: 1,
@@ -96,6 +101,12 @@ const ProfileTypeQuiz = () => {
   const [profileType, setProfileType] = useState<UserProfileType>()
   const [test, setTest] = useState<number>()
 
+  const onSubmitForm = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (profileType) setUserProfile(profileType)
+  }
+
   useEffect(() => {
     const totalProfileScore =
       profileScore.mastery * 0.2 +
@@ -106,15 +117,17 @@ const ProfileTypeQuiz = () => {
 
     if (totalProfileScore) setTest(totalProfileScore)
 
-    if (totalProfileScore > 0 && totalProfileScore < 5) {
+    const test = parseFloat(totalProfileScore.toString())
+
+    if (test < 2.0) {
       setProfileType("Conservative")
     }
 
-    if (totalProfileScore > 4 && totalProfileScore < 9) {
+    if (test >= 2.0 && test < 3.0) {
       setProfileType("Moderate")
     }
 
-    if (totalProfileScore > 11) {
+    if (test >= 3.0) {
       setProfileType("Aggresive")
     }
   }, [profileScore])
@@ -126,9 +139,8 @@ const ProfileTypeQuiz = () => {
       <p className="text-black">profile: {profileType}</p>
       <form
         className="flex flex-col gap-[16px] bg-black/[0.03] text-black p-[24px] rounded-[20px] h-full"
-        /*     onSubmit={(e) => onSubmitForm(e, item, path)} */
+        onSubmit={(e) => onSubmitForm(e)}
       >
-        {/*     <p className="text-[18px] font-semibold opacity-50">Goal details</p> */}
         <div className="flex flex-col gap-[8px]">
           <label htmlFor="mastery" className="text-sm opacity-50 font-semibold">
             How is your level of understanding and mastery on investing?
@@ -252,22 +264,16 @@ const ProfileTypeQuiz = () => {
   )
 }
 
-const NewItemPage = () => {
-  const [item, setItem] = useState<Item>({
-    id: nanoid(),
-    name: "",
-    price: 0,
-    initial: 0,
-  })
-
+const ProfileTypePage = () => {
+  const { setUserProfile } = useContext(UserContext)
   return (
     <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col h-full justify-between">
       <h1 className="text-black text-[36px] font-medium pb-[48px]">
         Let's get to know more about you
       </h1>
-      <ProfileTypeQuiz />
+      <ProfileTypeQuiz setUserProfile={setUserProfile} />
     </div>
   )
 }
 
-export default NewItemPage
+export default ProfileTypePage
