@@ -42,7 +42,7 @@ export const NewItemForm = ({
   }
   return (
     <form
-      className="flex flex-col gap-[16px] bg-black/[0.03] text-black p-[24px] rounded-[20px] h-full"
+      className="flex flex-col gap-[16px] bg-black/[0.03] text-black p-[24px] rounded-[20px] h-full w-full"
       onSubmit={(e) => onSubmitForm(e, item, path)}
     >
       <p className="text-[18px] font-semibold opacity-50">Goal details</p>
