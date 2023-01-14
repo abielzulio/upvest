@@ -15,7 +15,7 @@ const NewItemPage = () => {
       <h1 className="text-black text-[36px] font-medium pb-[48px]">
         What’s your investment goal?
       </h1>
-      <NewItemForm item={item} setItem={setItem} path="/welcome" />
+      <NewItemForm item={item} setItem={setItem} path="/profile-type" />
     </div>
   )
 }
