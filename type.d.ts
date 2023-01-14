@@ -8,6 +8,8 @@ import {
 
 export type DispatchSetState<T> = Dispatch<SetStateAction<T>>
 
+export type Maybe<T> = T | undefined
+
 export type UserProfileType =
   | "Conservative"
   | "Moderate"
@@ -21,6 +23,7 @@ export interface Item {
   name: string
   initial: number
   price: number
+  stock?: string
 }
 
 export interface LoadingData {
