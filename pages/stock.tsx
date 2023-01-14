@@ -1,7 +1,6 @@
 import Head from "components/Head"
 import { useRouter } from "next/router"
 import { FormEvent, useState } from "react"
-import { json } from "stream/consumers"
 import { DispatchSetState } from "type"
 
 const StockCard = ({
@@ -62,7 +61,7 @@ const StockRecommendationPage = () => {
             * based on past 1 year performance
           </span>
         </h1>
-        <div className="flex flex-col px-[36px] mb-[24px] gap-[20px] h-full overflow-scroll">
+        <div className="flex flex-col px-[36px] mb-[24px] gap-[20px] h-full overflow-y-scroll overflow-x-hidden">
           <StockCard
             symbol="AAPL"
             setSelectedStock={setSelectedStock}
