@@ -27,20 +27,22 @@ export const NewItemForm = ({
     if (!item.initial || item.initial === 0)
       toast.error("Initial investment amount can't be zero")
 
-    if (item.name && item.initial > 0 && item.price > 0)
+    if (item.name && item.initial > 0 && item.price > 0) {
+      const TEMP_ITEM_DATA = {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        initial: item.initial,
+      } satisfies Item
       return router.push({
         pathname: path,
-        query: {
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          initial: item.initial,
-        },
+        query: TEMP_ITEM_DATA,
       })
+    }
   }
   return (
     <form
-      className="flex flex-col gap-[16px] bg-black/[0.03] text-black p-[24px] rounded-[20px] h-full"
+      className="flex flex-col gap-[16px] bg-black/[0.03] text-black p-[24px] rounded-[20px] h-full w-full"
       onSubmit={(e) => onSubmitForm(e, item, path)}
     >
       <p className="text-[18px] font-semibold opacity-50">Goal details</p>
@@ -60,7 +62,7 @@ export const NewItemForm = ({
       </div>
       <div className="flex flex-col gap-[8px]">
         <label htmlFor="price" className="text-sm opacity-50 font-semibold">
-          Price
+          Price (in dollar $)
         </label>
         <input
           type="number"
@@ -74,7 +76,7 @@ export const NewItemForm = ({
       </div>
       <div className="flex flex-col gap-[8px]">
         <label htmlFor="initial" className="text-sm opacity-50 font-semibold">
-          Initial Investment
+          Initial Investment (in dollar $)
         </label>
         <input
           type="number"
@@ -87,7 +89,7 @@ export const NewItemForm = ({
         />
       </div>
       <div className="mt-auto">
-        <button className="bg-black/10 text-black cursor-pointer font-semibold py-[10px] w-full h-[51px] rounded-full transition hover:bg-black/20">
+        <button className="bg-black text-white text-[14px] cursor-pointer font-semibold py-[10px] w-full h-[51px] mt-[24px] border-[2px] border-transparent rounded-full transition hover:bg-transparent hover:border-black hover:text-black">
           Create My First Goal
         </button>
       </div>

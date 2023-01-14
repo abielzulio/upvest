@@ -10,6 +10,8 @@
 
   body {
     height: -webkit-fill-available;
+    background-color: #f2efdc;
+    overflow: hidden;
   }
 
   #root {
@@ -17,9 +19,16 @@
   }
 
   .h-screen-safe {
-    height: calc(
+    min-height: calc(
       100vh - (env(safe-area-inset-top) + env(safe-area-inset-bottom))
     );
+    height: 100%;
+    height: -webkit-fill-available;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .h-screen-safe {
     height: -webkit-fill-available;
   }
 }
