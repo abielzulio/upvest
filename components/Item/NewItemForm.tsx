@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { ChangeEvent } from "react"
+import { ChangeEvent, FormEvent } from "react"
 import { toast } from "react-hot-toast"
 import { DispatchSetState, Item } from "type"
 
@@ -15,7 +15,7 @@ export const NewItemForm = ({
   const router = useRouter()
 
   const onSubmitForm = (
-    e: ChangeEvent<HTMLFormElement>,
+    e: FormEvent<HTMLFormElement>,
     item: Item,
     path: string
   ) => {
@@ -65,7 +65,7 @@ export const NewItemForm = ({
         <input
           type="number"
           id="price"
-          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 focus-within:bor"
+          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 "
           placeholder="Price amount"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setItem({ ...item, price: Number(e.target.value) })
@@ -79,7 +79,7 @@ export const NewItemForm = ({
         <input
           type="number"
           id="initial"
-          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 focus-within:bor"
+          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 "
           placeholder="Initial amount"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setItem({ ...item, initial: Number(e.target.value) })
