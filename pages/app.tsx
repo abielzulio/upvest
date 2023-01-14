@@ -232,6 +232,13 @@ const HomePage = () => {
     }
   }, [QUERY_ITEM_DATA])
 
+  useEffect(() => {
+    if (QUERY_ITEM_DATA.toastLoad) {
+      toast.dismiss(QUERY_ITEM_DATA.toastLoad as string)
+      toast.success("Your profile is ready!")
+    }
+  }, [])
+
   return (
     <>
       <Head title="Home | Upvest" />

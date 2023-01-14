@@ -59,24 +59,30 @@ const StockRecommendationPage = () => {
   const [stocks, setStock] = useState<Stock[]>()
   const { userProfile } = useContext(UserContext)
   const [isLoading, setLoading] = useState<boolean>(true)
+  const [nextLoading, setNextLoading] = useState<boolean>(false)
 
   const router = useRouter()
   const QUERY_ITEM_DATA = router.query
 
   const { initial, final, spare, firstLoad } = router.query
 
-  const onInvestClick = (
-    e: FormEvent<HTMLButtonElement>,
-    stock: string | undefined,
-    item: any
-  ) => {
+  const onInvestClick = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    router.push({
-      pathname: "/app",
-      query: { ...item, stock },
-    })
+    setNextLoading(true)
   }
+
+  useEffect(() => {
+    if (nextLoading) {
+      const toastLoad = toast.loading("Preparing your profile...")
+      setTimeout(() => {
+        router.push({
+          pathname: "/app",
+          query: { ...QUERY_ITEM_DATA, stock: selectedStock, toastLoad },
+        })
+      }, 5000)
+    }
+  }, [nextLoading])
 
   const fetchStock = async (profile: string | undefined) => {
     try {
@@ -107,33 +113,43 @@ const StockRecommendationPage = () => {
             * based on past 1 year performance
           </span>
         </h1>
-        {!isLoading && stocks && (
-          <div className="flex flex-col px-[36px] gap-[20px] mb-auto h-[500px] overflow-y-scroll">
-            {stocks.map((item) => (
-              <StockCard
-                key={item.id}
-                symbol={item.symbol}
-                gain={item.gain}
-                amount={{
-                  initial: Number(initial),
-                  final: Number(final),
-                  spare: Number(spare),
-                }}
-                setSelectedStock={setSelectedStock}
-                selectedStock={selectedStock}
-              />
-            ))}
+        {isLoading ? (
+          <div className="flex items-center justify-center w-full">
+            <p className="animate-spin text-[32px] text-black">◡</p>
           </div>
+        ) : (
+          stocks && (
+            <div className="flex flex-col px-[36px] gap-[20px] mb-auto h-[500px] overflow-y-scroll">
+              {stocks.map((item) => (
+                <StockCard
+                  key={item.id}
+                  symbol={item.symbol}
+                  gain={item.gain}
+                  amount={{
+                    initial: Number(initial),
+                    final: Number(final),
+                    spare: Number(spare),
+                  }}
+                  setSelectedStock={setSelectedStock}
+                  selectedStock={selectedStock}
+                />
+              ))}
+            </div>
+          )
         )}
         <div className="flex flex-col gap-[24px] px-[36px] mt-[24px]">
           <button
-            onClick={(e) => onInvestClick(e, selectedStock, QUERY_ITEM_DATA)}
+            onClick={(e) => onInvestClick(e)}
             type="button"
             style={{ opacity: selectedStock ? 1 : 0.5 }}
             disabled={!selectedStock}
             className="bg-black h-[64px] w-full text-white rounded-full border-[2px] border-transparent font-semibold transition hover:bg-transparent hover:border-black hover:text-black"
           >
-            Let's invest {selectedStock ?? ""}
+            {nextLoading ? (
+              <p className="animate-spin">◡</p>
+            ) : (
+              `Let's invest ${selectedStock ?? ""}`
+            )}
           </button>
         </div>
       </div>

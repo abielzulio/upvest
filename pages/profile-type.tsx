@@ -5,9 +5,8 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
 import Confetti from "react-confetti"
-import { DispatchSetState, UserProfileType } from "type"
-import * as Icon from "components/Icon"
 import { toast } from "react-hot-toast"
+import { DispatchSetState, UserProfileType } from "type"
 
 const PROFILE_OPTIONS = {
   mastery: [
