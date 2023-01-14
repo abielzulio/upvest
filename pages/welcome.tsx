@@ -20,11 +20,11 @@ const WelcomePage = () => {
   return (
     <>
       <Head title="Welcome | Upvest" />
-      <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col h-full justify-between">
+      <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col min-h-screen justify-between">
         <h1 className="text-black text-[48px] font-medium">
           Your investment journey, start from here
         </h1>
-        <div className="flex flex-col gap-[24px]">
+        <div className="flex flex-col gap-[24px] mt-auto">
           <button
             onClick={(e) => onLoginClick(e, items)}
             type="button"

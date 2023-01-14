@@ -126,7 +126,7 @@ const HomePage = () => {
   return (
     <>
       <Head title="Home | Upvest" />
-      <div className="flex flex-col h-full justify-between bg-black">
+      <div className="flex flex-col overflow-y-scroll justify-between bg-black">
         <div className="h-fit flex flex-col gap-[15px] pb-[32px] justify-center items-center w-full text-white">
           <div className="flex items-center h-fit w-full px-[24px] pt-[54px] justify-between">
             <Icon.Setting />
@@ -159,7 +159,7 @@ const HomePage = () => {
             />
           </div>
         </div>
-        <div className="w-full h-full gap-[20px] flex flex-col rounded-tl-[32px] rounded-tr-[32px] pt-[32px] text-black bg-white/[0.95]">
+        <div className="w-full gap-[20px] flex flex-col rounded-tl-[32px] rounded-tr-[32px] pt-[32px] pb-[32px] text-black bg-white/[0.95]">
           <div className="flex items-center justify-between px-[32px]">
             <p className="text-[18px] font-medium opacity-80">My goals</p>
             <Link href="/new">
@@ -171,9 +171,14 @@ const HomePage = () => {
               </button>
             </Link>
           </div>
-          <div className="flex flex-col px-[32px] overflow-x-hidden overflow-y-scroll h-full">
+          <div className="flex flex-col px-[32px] h-fit">
             {DATA.name ? (
-              <GoalItemCard item={DATA} />
+              <>
+                <GoalItemCard item={DATA} />
+                <GoalItemCard item={DATA} />
+                <GoalItemCard item={DATA} />
+                <GoalItemCard item={DATA} />
+              </>
             ) : (
               <GoalItemCard item={ITEM_PLACEHOLDER_DATA as Item} />
             )}

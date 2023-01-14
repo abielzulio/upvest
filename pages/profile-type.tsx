@@ -280,7 +280,7 @@ const ProfileTypePage = () => {
   return (
     <>
       <Head title="Create profile | Upvest" />
-      <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col h-full justify-between">
+      <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col min-h-screen justify-between">
         <h1 className="text-black text-[36px] font-medium pb-[48px]">
           Let's get to know more about you
         </h1>
@@ -296,7 +296,7 @@ const ProfileTypePage = () => {
             <Link href="/stock">
               <button
                 onClick={(e) => onSeeStockClick(e, QUERY_ITEM_DATA)}
-                className="bg-black/10 text-black mt-[60px] cursor-pointer font-semibold py-[10px] w-full h-[51px] rounded-full transition hover:bg-black/20"
+                className="bg-black/10 text-black mt-[45px] cursor-pointer font-semibold py-[10px] w-full h-[51px] rounded-full transition hover:bg-black/20"
               >
                 See My Recommendation
               </button>
