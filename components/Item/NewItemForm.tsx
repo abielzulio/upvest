@@ -60,7 +60,7 @@ export const NewItemForm = ({
       </div>
       <div className="flex flex-col gap-[8px]">
         <label htmlFor="price" className="text-sm opacity-50 font-semibold">
-          Price
+          Price (in dollar $)
         </label>
         <input
           type="number"
@@ -74,7 +74,7 @@ export const NewItemForm = ({
       </div>
       <div className="flex flex-col gap-[8px]">
         <label htmlFor="initial" className="text-sm opacity-50 font-semibold">
-          Initial Investment
+          Initial Investment (in dollar $)
         </label>
         <input
           type="number"
