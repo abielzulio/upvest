@@ -2,6 +2,7 @@ import Head from "components/Head"
 import UserContext from "context/user"
 import { useWindowSize } from "hooks/useWindowSize"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
 import Confetti from "react-confetti"
 import { DispatchSetState, UserProfileType } from "type"
@@ -264,7 +265,18 @@ const ProfileTypeQuiz = ({
 const ProfileTypePage = () => {
   const { setUserProfile, userProfile } = useContext(UserContext)
   const { width, height } = useWindowSize()
+  const router = useRouter()
+  const goalData = router.query
   const [showResult, setShowResult] = useState<boolean>(false)
+
+  const onSeeStockClick = (e: Event, data: any) => {
+    e.preventDefault()
+
+    router.push({
+      pathname: "/stock",
+      query: data,
+    })
+  }
   return (
     <>
       <Head title="Create profile | Upvest" />
@@ -282,7 +294,10 @@ const ProfileTypePage = () => {
               on your profile!
             </p>
             <Link href="/stock">
-              <button className="bg-black/10 text-black mt-[60px] cursor-pointer font-semibold py-[10px] w-full h-[51px] rounded-full transition hover:bg-black/20">
+              <button
+                onClick={(e) => onSeeStockClick(e, goalData)}
+                className="bg-black/10 text-black mt-[60px] cursor-pointer font-semibold py-[10px] w-full h-[51px] rounded-full transition hover:bg-black/20"
+              >
                 See My Recommendation
               </button>
             </Link>
