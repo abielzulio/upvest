@@ -10,6 +10,7 @@
 
   body {
     height: -webkit-fill-available;
+    background-color: #f2efdc;
   }
 
   #root {
