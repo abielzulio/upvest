@@ -266,15 +266,15 @@ const ProfileTypePage = () => {
   const { setUserProfile, userProfile } = useContext(UserContext)
   const { width, height } = useWindowSize()
   const router = useRouter()
-  const goalData = router.query
+  const QUERY_ITEM_DATA = router.query
   const [showResult, setShowResult] = useState<boolean>(false)
 
-  const onSeeStockClick = (e: FormEvent<HTMLButtonElement>, data: any) => {
+  const onSeeStockClick = (e: FormEvent<HTMLButtonElement>, item: any) => {
     e.preventDefault()
 
     router.push({
       pathname: "/stock",
-      query: data,
+      query: item,
     })
   }
   return (
@@ -295,7 +295,7 @@ const ProfileTypePage = () => {
             </p>
             <Link href="/stock">
               <button
-                onClick={(e) => onSeeStockClick(e, goalData)}
+                onClick={(e) => onSeeStockClick(e, QUERY_ITEM_DATA)}
                 className="bg-black/10 text-black mt-[60px] cursor-pointer font-semibold py-[10px] w-full h-[51px] rounded-full transition hover:bg-black/20"
               >
                 See My Recommendation

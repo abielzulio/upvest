@@ -27,16 +27,18 @@ export const NewItemForm = ({
     if (!item.initial || item.initial === 0)
       toast.error("Initial investment amount can't be zero")
 
-    if (item.name && item.initial > 0 && item.price > 0)
+    if (item.name && item.initial > 0 && item.price > 0) {
+      const QUERY_ITEM_DATA = {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        initial: item.price,
+      } satisfies Item
       return router.push({
         pathname: path,
-        query: {
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          initial: item.initial,
-        },
+        query: QUERY_ITEM_DATA,
       })
+    }
   }
   return (
     <form

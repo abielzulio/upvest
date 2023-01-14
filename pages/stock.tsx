@@ -38,19 +38,23 @@ const StockCard = ({
 
 const StockRecommendationPage = () => {
   const [selectedStock, setSelectedStock] = useState<string>()
+
   const router = useRouter()
-  const goalData = router.query
+  const QUERY_ITEM_DATA = router.query
+
   const onInvestClick = (
     e: FormEvent<HTMLButtonElement>,
-    stock: string | undefined
+    stock: string | undefined,
+    item: any
   ) => {
     e.preventDefault()
 
     router.push({
       pathname: "/",
-      query: { ...goalData, stock },
+      query: { ...item, stock },
     })
   }
+
   return (
     <>
       <Head title="Stock recommendations | Upvest" />
@@ -100,7 +104,7 @@ const StockRecommendationPage = () => {
         </div>
         <div className="flex flex-col gap-[24px] px-[36px]">
           <button
-            onClick={(e) => onInvestClick(e, selectedStock)}
+            onClick={(e) => onInvestClick(e, selectedStock, QUERY_ITEM_DATA)}
             type="button"
             style={{ opacity: selectedStock ? 1 : 0.5 }}
             disabled={!selectedStock}
