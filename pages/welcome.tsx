@@ -24,7 +24,7 @@ const WelcomePage = () => {
         <h1 className="text-black text-[48px] font-medium">
           Your investment journey, start from here
         </h1>
-        <div className="flex flex-col gap-[24px] mt-auto">
+        <div className="flex flex-col gap-[24px]">
           <button
             onClick={(e) => onLoginClick(e, items)}
             type="button"
