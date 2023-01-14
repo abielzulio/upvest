@@ -5,7 +5,7 @@ import _ from "lodash"
 export default async (req: NextApiRequest, res: NextApiResponse<any>) => {
   const type = req.query.type
   try {
-    let { data, error } = await supabase
+    const { data, error } = await supabase
       .from("tb_stock")
       .select("*, tb_price(*)")
       .eq("type", type?.toString().toUpperCase())
@@ -14,9 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<any>) => {
       throw new Error("there is error at server")
     }
 
-    data = _.sampleSize(data, 5)
-
-    const formatedData = data.map((e: any) => {
+    let formatedData = data.map((e: any) => {
       const price = e.tb_price.map((e: any) => parseFloat(e.close))
       return {
         id: e.stock_id,
@@ -25,12 +23,16 @@ export default async (req: NextApiRequest, res: NextApiResponse<any>) => {
         gain: ((price[0] - price[11]) / price[0]) * 100,
       }
     })
-    return res
-      .status(200)
-      .json({
-        message: "success",
-        data: _.orderBy(formatedData, (e) => e.gain, ["desc"]),
-      })
+
+    formatedData = _.sampleSize(
+      _.filter(formatedData, (e) => e.gain > 0),
+      5
+    )
+
+    return res.status(200).json({
+      message: "success",
+      data: _.orderBy(formatedData, (e) => e.gain, ["desc"]),
+    })
   } catch (error) {
     return res
       .status(500)

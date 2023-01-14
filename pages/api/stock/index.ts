@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<any>) => {
         throw new Error("there is error at server")
       }
 
-      const formatedData = data.map((e: any) => {
+      let formatedData = data.map((e: any) => {
         const price = e.tb_price.map((e: any) => parseFloat(e.close))
         return {
           id: e.stock_id,
@@ -24,6 +24,9 @@ export default async (req: NextApiRequest, res: NextApiResponse<any>) => {
           gain: ((price[0] - price[11]) / price[0]) * 100,
         }
       })
+
+      formatedData = _.filter(formatedData, (e) => e.gain > 0)
+
       return res.status(200).json({
         message: "success",
         data: _.orderBy(formatedData, (e) => e.gain, ["desc"]),
@@ -48,6 +51,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<any>) => {
         gain: ((price[0] - price[11]) / price[0]) * 100,
       }
     })
+
     return res
       .status(200)
       .json({
