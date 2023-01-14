@@ -22,7 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<any>) => {
         id: e.stock_id,
         symbol: e.symbol,
         price: price.slice(0, 12),
-        gain: _.sum(price.slice(0, 12)) / 12,
+        gain: ((price[0] - price[11]) / price[0]) * 100,
       }
     })
     return res
