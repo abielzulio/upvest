@@ -1,8 +1,10 @@
-import { NewItemForm } from "components/Item"
-import { nanoid } from "nanoid"
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
+import Head from "components/Head"
 import UserContext from "context/user"
-import { DispatchSetState, Item, UserProfileType } from "type"
+import { useWindowSize } from "hooks/useWindowSize"
+import Link from "next/link"
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
+import Confetti from "react-confetti"
+import { DispatchSetState, UserProfileType } from "type"
 
 const PROFILE_OPTIONS = {
   mastery: [
@@ -105,7 +107,10 @@ const ProfileTypeQuiz = ({
   const onSubmitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    /*     if (profileType) setUserProfile(profileType) */
+    if (profileType) {
+      setShowResult(true)
+      setUserProfile(profileType)
+    }
   }
 
   useEffect(() => {
@@ -137,7 +142,6 @@ const ProfileTypeQuiz = ({
       className="flex flex-col gap-[16px] bg-black/[0.03] text-black p-[24px] rounded-[20px] h-full"
       onSubmit={(e) => onSubmitForm(e)}
     >
-      <p>{profileType}</p>
       <div className="flex flex-col gap-[8px]">
         <label htmlFor="mastery" className="text-sm opacity-50 font-semibold">
           How is your level of understanding and mastery on investing?
@@ -258,18 +262,39 @@ const ProfileTypeQuiz = ({
 }
 
 const ProfileTypePage = () => {
-  const { setUserProfile } = useContext(UserContext)
+  const { setUserProfile, userProfile } = useContext(UserContext)
+  const { width, height } = useWindowSize()
   const [showResult, setShowResult] = useState<boolean>(false)
   return (
-    <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col h-full justify-between">
-      <h1 className="text-black text-[36px] font-medium pb-[48px]">
-        Let's get to know more about you
-      </h1>
-      <ProfileTypeQuiz
-        setUserProfile={setUserProfile}
-        setShowResult={showResult}
-      />
-    </div>
+    <>
+      <Head title="Create profile | Upvest" />
+      <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col h-full justify-between">
+        <h1 className="text-black text-[36px] font-medium pb-[48px]">
+          Let's get to know more about you
+        </h1>
+        {showResult && userProfile ? (
+          <div className="text-black flex text-center flex-col gap-[16px] bg-black/[0.03] p-[24px] rounded-[20px] h-fit mb-auto">
+            <Confetti width={width} height={height} />
+            <p className="opacity-50 font-medium">Your investment profile is</p>
+            <p className="text-[32px] font-semibold">{userProfile}</p>
+            <p className="opacity-50">
+              Start your first investment with our stock recommendations based
+              on your profile!
+            </p>
+            <Link href="/stock">
+              <button className="bg-black/10 text-black mt-[60px] cursor-pointer font-semibold py-[10px] w-full h-[51px] rounded-full transition hover:bg-black/20">
+                See My Recommendation
+              </button>
+            </Link>
+          </div>
+        ) : (
+          <ProfileTypeQuiz
+            setUserProfile={setUserProfile}
+            setShowResult={setShowResult}
+          />
+        )}
+      </div>
+    </>
   )
 }
 
