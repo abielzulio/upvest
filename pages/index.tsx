@@ -159,7 +159,7 @@ const HomePage = () => {
             />
           </div>
         </div>
-        <div className="w-full gap-[20px] flex flex-col rounded-tl-[32px] rounded-tr-[32px] pt-[32px] pb-[32px] text-black bg-white/[0.95]">
+        <div className="w-full gap-[20px] min-h-fit flex flex-col rounded-tl-[32px] rounded-tr-[32px] pt-[32px] pb-[32px] text-black bg-white/[0.95]">
           <div className="flex items-center justify-between px-[32px]">
             <p className="text-[18px] font-medium opacity-80">My goals</p>
             <Link href="/new">
@@ -171,7 +171,7 @@ const HomePage = () => {
               </button>
             </Link>
           </div>
-          <div className="flex flex-col px-[32px] h-fit">
+          <div className="flex flex-col px-[32px] min-h-fit">
             {DATA.name ? (
               <>
                 <GoalItemCard item={DATA} />

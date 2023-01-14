@@ -280,7 +280,7 @@ const ProfileTypePage = () => {
   return (
     <>
       <Head title="Create profile | Upvest" />
-      <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col min-h-screen justify-between">
+      <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col h-screen-safe justify-between">
         <h1 className="text-black text-[36px] font-medium pb-[48px]">
           Let's get to know more about you
         </h1>
