@@ -1,3 +1,4 @@
+import Head from "components/Head"
 import UserContext from "context/user"
 import { useRouter } from "next/router"
 import { FormEvent, useContext } from "react"
@@ -17,20 +18,23 @@ const WelcomePage = () => {
     return router.push("/")
   }
   return (
-    <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col h-full justify-between">
-      <h1 className="text-black text-[48px] font-medium">
-        Your investment journey, start from here
-      </h1>
-      <div className="flex flex-col gap-[24px]">
-        <button
-          onClick={(e) => onLoginClick(e, items)}
-          type="button"
-          className="bg-black h-[64px] w-full text-white rounded-full border-[2px] border-transparent font-semibold transition hover:bg-transparent hover:border-black hover:text-black"
-        >
-          Connect RHB Account
-        </button>
+    <>
+      <Head title="Welcome | Upvest" />
+      <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col h-full justify-between">
+        <h1 className="text-black text-[48px] font-medium">
+          Your investment journey, start from here
+        </h1>
+        <div className="flex flex-col gap-[24px]">
+          <button
+            onClick={(e) => onLoginClick(e, items)}
+            type="button"
+            className="bg-black h-[64px] w-full text-white rounded-full border-[2px] border-transparent font-semibold transition hover:bg-transparent hover:border-black hover:text-black"
+          >
+            Connect RHB Account
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
