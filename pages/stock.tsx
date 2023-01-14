@@ -1,6 +1,6 @@
 import Head from "components/Head"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import { json } from "stream/consumers"
 import { DispatchSetState } from "type"
 
@@ -41,7 +41,10 @@ const StockRecommendationPage = () => {
   const [selectedStock, setSelectedStock] = useState<string>()
   const router = useRouter()
   const goalData = router.query
-  const onInvestClick = (e: Event, stock: string) => {
+  const onInvestClick = (
+    e: FormEvent<HTMLButtonElement>,
+    stock: string | undefined
+  ) => {
     e.preventDefault()
 
     router.push({

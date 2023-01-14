@@ -269,7 +269,7 @@ const ProfileTypePage = () => {
   const goalData = router.query
   const [showResult, setShowResult] = useState<boolean>(false)
 
-  const onSeeStockClick = (e: Event, data: any) => {
+  const onSeeStockClick = (e: FormEvent<HTMLButtonElement>, data: any) => {
     e.preventDefault()
 
     router.push({
