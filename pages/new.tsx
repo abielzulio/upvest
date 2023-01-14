@@ -8,8 +8,9 @@ const NewItemPage = () => {
   const [item, setItem] = useState<Item>({
     id: nanoid(),
     name: "",
-    price: 0,
+    final: 0,
     initial: 0,
+    spare: 0,
   })
   return (
     <>

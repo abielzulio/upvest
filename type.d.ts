@@ -22,7 +22,8 @@ export interface Item {
   id: string
   name: string
   initial: number
-  price: number
+  final: number
+  spare: number
   stock?: string
   success?: boolean
 }

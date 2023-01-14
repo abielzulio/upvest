@@ -22,17 +22,20 @@ export const NewItemForm = ({
     e.preventDefault()
 
     if (!item.name) toast.error("Goal name can't be empty")
-    if (!item.price || item.price === 0)
+    if (!item.final || item.final === 0)
       toast.error("Goal price amount can't be zero")
     if (!item.initial || item.initial === 0)
       toast.error("Initial investment amount can't be zero")
+    if (!item.initial || item.spare === 0)
+      toast.error("Initial investment amount can't be zero")
 
-    if (item.name && item.initial > 0 && item.price > 0) {
+    if (item.name && item.initial > 0 && item.final > 0) {
       const TEMP_ITEM_DATA = {
         id: item.id,
         name: item.name,
-        price: item.price,
+        final: item.final,
         initial: item.initial,
+        spare: item.spare,
       } satisfies Item
       return router.push({
         pathname: path,
@@ -61,30 +64,44 @@ export const NewItemForm = ({
         />
       </div>
       <div className="flex flex-col gap-[8px]">
-        <label htmlFor="price" className="text-sm opacity-50 font-semibold">
-          Price (in dollar $)
+        <label htmlFor="final" className="text-sm opacity-50 font-semibold">
+          Investment target
         </label>
         <input
           type="number"
-          id="price"
+          id="final"
           className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 "
-          placeholder="Price amount"
+          placeholder="Target amount (in dollar $)"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setItem({ ...item, price: Number(e.target.value) })
+            setItem({ ...item, final: Number(e.target.value) })
           }
         />
       </div>
       <div className="flex flex-col gap-[8px]">
         <label htmlFor="initial" className="text-sm opacity-50 font-semibold">
-          Initial Investment (in dollar $)
+          Initial investment
         </label>
         <input
           type="number"
           id="initial"
           className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 "
-          placeholder="Initial amount"
+          placeholder="Initial amount (in dollar $)"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setItem({ ...item, initial: Number(e.target.value) })
+          }
+        />
+      </div>
+      <div className="flex flex-col gap-[8px]">
+        <label htmlFor="initial" className="text-sm opacity-50 font-semibold">
+          How much would you invest per month?
+        </label>
+        <input
+          type="number"
+          id="initial"
+          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 "
+          placeholder="Spare amount (in dollar $)"
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setItem({ ...item, spare: Number(e.target.value) })
           }
         />
       </div>
