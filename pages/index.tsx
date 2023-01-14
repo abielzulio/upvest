@@ -2,7 +2,7 @@ import * as Icon from "components/Icon"
 import UserContext from "context/user"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { DispatchSetState } from "type"
 
 type BalanceType = "Invest" | "Bank"
@@ -56,7 +56,9 @@ const HomePage = () => {
           {balanceType === "Invest" ? (
             <>
               <span className="text-[32px] opacity-50 mt-[15px]">$</span>
-              {Number(goalData.initial ?? 0).toLocaleString()}
+              {goalData.initial
+                ? Number(goalData.initial ?? 0).toLocaleString()
+                : 50}
             </>
           ) : (
             <>
@@ -90,15 +92,15 @@ const HomePage = () => {
             </button>
           </Link>
         </div>
-        <div className="flex flex-col px-[32px] overflow-scroll h-full">
-          {goalData && (
+        <div className="flex flex-col px-[32px] overflow-x-hidden overflow-y-scroll h-full">
+          {goalData.name ? (
             <div className="w-full flex flex-col gap-[5px] bg-white p-[24px] my-[15px] rounded-[10px] shadow-[0px_0px_20px_rgba(0,0,0,0.13)]">
               <div className="flex justify-between">
                 <p className="text-[18px] font-medium flex items-center gap-[10px]">
                   {goalData.name}
                 </p>
                 <p className="font-mono">
-                  $0
+                  ${goalData.initial}
                   <span className="opacity-50">
                     /${goalData.price?.toLocaleString()}
                   </span>
@@ -139,45 +141,33 @@ const HomePage = () => {
                 Top up
               </button>
             </div>
-          )}
-          {goalData && (
+          ) : (
             <div className="w-full flex flex-col gap-[5px] bg-white p-[24px] my-[15px] rounded-[10px] shadow-[0px_0px_20px_rgba(0,0,0,0.13)]">
               <div className="flex justify-between">
                 <p className="text-[18px] font-medium flex items-center gap-[10px]">
-                  {goalData.name}
+                  iPad Air
                 </p>
                 <p className="font-mono">
-                  $0
-                  <span className="opacity-50">
-                    /${goalData.price?.toLocaleString()}
-                  </span>
+                  $50
+                  <span className="opacity-50">/$1500</span>
                 </p>
               </div>
               <div className="flex justify-between">
                 <p className="text-[12px] opacity-50">11/11/2023</p>
                 <p className="text-[10px] bg-black/10 px-[8px] py-[2px] rounded-full font-mono font-medium tracking-wide">
-                  {goalData.stock}
+                  GOOG
                 </p>
               </div>
               <div className="flex flex-col gap-[8px] mt-[15px] my-[10px]">
                 <span
                   className="h-[5px] bg-green-500 rounded-full"
                   style={{
-                    width: `${
-                      ((Number(goalData.initial) ?? 1) /
-                        (Number(goalData.price) ?? 100)) *
-                      100
-                    }%`,
+                    width: `${(50 / 1500) * 100}%`,
                   }}
                 />
                 <div className="flex justify-between items-center">
                   <p className="text-green-500 text-[14px]">
-                    {(
-                      ((Number(goalData.initial) ?? 1) /
-                        (Number(goalData.price) ?? 100)) *
-                      100
-                    ).toFixed(1)}
-                    %
+                    {((50 / 1500) * 100).toFixed(1)}%
                   </p>
                   <p className="text-black opacity-50 font-medium text-[12px]">
                     1 more months
@@ -189,83 +179,6 @@ const HomePage = () => {
               </button>
             </div>
           )}
-          {goalData && (
-            <div className="w-full flex flex-col gap-[5px] bg-white p-[24px] my-[15px] rounded-[10px] shadow-[0px_0px_20px_rgba(0,0,0,0.13)]">
-              <div className="flex justify-between">
-                <p className="text-[18px] font-medium flex items-center gap-[10px]">
-                  {goalData.name}
-                </p>
-                <p className="font-mono">
-                  $0
-                  <span className="opacity-50">
-                    /${goalData.price?.toLocaleString()}
-                  </span>
-                </p>
-              </div>
-              <div className="flex justify-between">
-                <p className="text-[12px] opacity-50">11/11/2023</p>
-                <p className="text-[10px] bg-black/10 px-[8px] py-[2px] rounded-full font-mono font-medium tracking-wide">
-                  {goalData.stock}
-                </p>
-              </div>
-              <div className="flex flex-col gap-[8px] mt-[15px] my-[10px]">
-                <span
-                  className="h-[5px] bg-green-500 rounded-full"
-                  style={{
-                    width: `${
-                      ((Number(goalData.initial) ?? 1) /
-                        (Number(goalData.price) ?? 100)) *
-                      100
-                    }%`,
-                  }}
-                />
-                <div className="flex justify-between items-center">
-                  <p className="text-green-500 text-[14px]">
-                    {(
-                      ((Number(goalData.initial) ?? 1) /
-                        (Number(goalData.price) ?? 100)) *
-                      100
-                    ).toFixed(1)}
-                    %
-                  </p>
-                  <p className="text-black opacity-50 font-medium text-[12px]">
-                    1 more months
-                  </p>
-                </div>
-              </div>
-              <button className="bg-black hover:bg-opacity-80 transition font-medium text-[14px] h-[48px] text-white rounded-full">
-                Top up
-              </button>
-            </div>
-          )}
-          {/*           <div className="w-full flex flex-col gap-[5px] bg-white p-[24px] rounded-[10px] shadow-[0px_0px_20px_rgba(0,0,0,0.13)]">
-            <div className="flex justify-between">
-              <p className="text-[18px] font-medium flex items-center gap-[10px]">
-                iPhone 11
-              </p>
-              <p className="font-mono">
-                $1500<span className="opacity-50">/$1500</span>
-              </p>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-[12px] opacity-50">11/11/2023</p>
-              <p className="text-[10px] bg-black/10 px-[8px] py-[2px] rounded-full font-mono font-medium tracking-wide">
-                AAPL
-              </p>
-            </div>
-            <div className="flex flex-col gap-[8px] mt-[15px] my-[10px]">
-              <span className="h-[5px] bg-green-500 rounded-full" />
-              <div className="flex justify-between items-center">
-                <p className="text-green-500 text-[14px]">100%</p>
-                <p className="text-green-500 font-medium text-[12px]">
-                  Time to cash out
-                </p>
-              </div>
-            </div>
-            <button className="bg-green-500 hover:bg-opacity-80 transition font-medium text-[14px] h-[48px] text-white rounded-full">
-              Cash out
-            </button>
-          </div> */}
         </div>
       </div>
     </div>
