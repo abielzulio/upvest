@@ -21,10 +21,16 @@ export default async (req: NextApiRequest, res: NextApiResponse<any>) => {
       return {
         id: e.stock_id,
         symbol: e.symbol,
-        price: price.slice(0, 12)
+        price: price.slice(0, 12),
+        gain: _.sum(price.slice(0, 12)) / 12,
       }
     })
-    return res.status(200).json({ message: "success", data:  formatedData })
+    return res
+      .status(200)
+      .json({
+        message: "success",
+        data: _.orderBy(formatedData, (e) => e.gain, ["desc"]),
+      })
   } catch (error) {
     return res
       .status(500)
