@@ -14,8 +14,8 @@ const NewItemPage = () => {
   return (
     <>
       <Head title="Create new goal | Upvest" />
-      <div className="px-[36px] pb-[36px] pt-[48px] flex flex-col h-screen-safe justify-between">
-        <h1 className="text-black text-[36px] font-medium pb-[48px]">
+      <div className="px-[36px] py-[36px] flex flex-col h-screen-safe justify-between">
+        <h1 className="text-black text-[36px] font-medium pb-[36x]">
           What’s your investment goal?
         </h1>
         <NewItemForm item={item} setItem={setItem} path="/profile-type" />

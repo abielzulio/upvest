@@ -58,10 +58,10 @@ const StockRecommendationPage = () => {
   return (
     <>
       <Head title="Stock recommendations | Upvest" />
-      <div className="pb-[36px] pt-[48px] flex flex-col h-screen-safe">
+      <div className="pb-[36px] py-[36px] flex flex-col h-screen-safe">
         <h1 className="text-black text-[36px] font-medium pb-[24px] px-[36px]">
           Here’s our stock recommendation* for you <br />
-          <span className="opacity-50 text-[16px] font-normal">
+          <span className="opacity-50 text-[16px] font-normal -mt-[10px]">
             * based on past 1 year performance
           </span>
         </h1>

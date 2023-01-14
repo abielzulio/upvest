@@ -18,10 +18,10 @@
   }
 
   .h-screen-safe {
-    height: calc(
+    min-height: calc(
       100vh - (env(safe-area-inset-top) + env(safe-area-inset-bottom))
     );
-    height: -webkit-fill-available;
+    min-height: -webkit-fill-available;
   }
 }
 
