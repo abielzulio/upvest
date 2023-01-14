@@ -63,7 +63,7 @@ const StockRecommendationPage = () => {
   const router = useRouter()
   const QUERY_ITEM_DATA = router.query
 
-  const { initial, final, spare } = router.query
+  const { initial, final, spare, firstLoad } = router.query
 
   const onInvestClick = (
     e: FormEvent<HTMLButtonElement>,
@@ -85,6 +85,8 @@ const StockRecommendationPage = () => {
       if (res.ok) {
         setStock(data.data)
         setLoading(false)
+        toast.dismiss(firstLoad as string)
+        toast.success("Done!")
       }
     } catch (e) {
       toast.error(e as string)

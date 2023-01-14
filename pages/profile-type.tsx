@@ -292,13 +292,11 @@ const ProfileTypePage = () => {
 
   useEffect(() => {
     if (isLoading) {
-      const toastLoad = toast.loading("Preparing your best stocks...")
+      const toastLoad = toast.loading("Preparing our best stocks...")
       setTimeout(() => {
-        toast.dismiss(toastLoad)
-        toast.success("Done!")
         router.push({
           pathname: "/stock",
-          query: QUERY_ITEM_DATA,
+          query: { ...QUERY_ITEM_DATA, toastLoad },
         })
       }, 5000)
     }
