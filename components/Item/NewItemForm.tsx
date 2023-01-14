@@ -28,15 +28,15 @@ export const NewItemForm = ({
       toast.error("Initial investment amount can't be zero")
 
     if (item.name && item.initial > 0 && item.price > 0) {
-      const QUERY_ITEM_DATA = {
+      const TEMP_ITEM_DATA = {
         id: item.id,
         name: item.name,
         price: item.price,
-        initial: item.price,
+        initial: item.initial,
       } satisfies Item
       return router.push({
         pathname: path,
-        query: QUERY_ITEM_DATA,
+        query: TEMP_ITEM_DATA,
       })
     }
   }
@@ -89,7 +89,7 @@ export const NewItemForm = ({
         />
       </div>
       <div className="mt-auto">
-        <button className="bg-black/10 text-black cursor-pointer font-semibold py-[10px] w-full h-[51px] rounded-full transition hover:bg-black/20">
+        <button className="bg-black text-white text-[14px] cursor-pointer font-semibold py-[10px] w-full h-[51px] mt-[24px] border-[2px] border-transparent rounded-full transition hover:bg-transparent hover:border-black hover:text-black">
           Create My First Goal
         </button>
       </div>

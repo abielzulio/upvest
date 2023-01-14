@@ -24,6 +24,7 @@ export interface Item {
   initial: number
   price: number
   stock?: string
+  success?: boolean
 }
 
 export interface LoadingData {

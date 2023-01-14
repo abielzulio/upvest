@@ -1,7 +1,15 @@
 import Head from "components/Head"
+import UserContext from "context/user"
 import { useRouter } from "next/router"
-import { FormEvent, useState } from "react"
+import { FormEvent, useContext, useEffect, useState } from "react"
+import { toast } from "react-hot-toast"
 import { DispatchSetState } from "type"
+
+interface Stock {
+  id: number
+  symbol: string
+  price: number[]
+}
 
 const StockCard = ({
   symbol,
@@ -38,6 +46,9 @@ const StockCard = ({
 
 const StockRecommendationPage = () => {
   const [selectedStock, setSelectedStock] = useState<string>()
+  const [stocks, setStock] = useState<Stock[]>()
+  const { userProfile } = useContext(UserContext)
+  const [isLoading, setLoading] = useState<boolean>(true)
 
   const router = useRouter()
   const QUERY_ITEM_DATA = router.query
@@ -55,53 +66,45 @@ const StockRecommendationPage = () => {
     })
   }
 
+  const fetchStock = async (profile: string | undefined) => {
+    try {
+      const res = await fetch(`/api/stock/${profile?.toLowerCase()}`)
+      const data = await res.json()
+      if (res.ok) {
+        setStock(data.data)
+        setLoading(false)
+      }
+    } catch (e) {
+      toast.error(e as string)
+    }
+  }
+
+  useEffect(() => {
+    fetchStock(userProfile?.toLowerCase())
+  }, [userProfile])
+
   return (
     <>
       <Head title="Stock recommendations | Upvest" />
-      <div className="pb-[36px] py-[36px] flex flex-col h-screen-safe">
+      <div className="pb-[36px] py-[36px] flex flex-col h-screen-safe h-full justify-between">
         <h1 className="text-black text-[36px] font-medium pb-[24px] px-[36px]">
           Here’s our stock recommendation* for you <br />
           <span className="opacity-50 text-[16px] font-normal -mt-[10px]">
             * based on past 1 year performance
           </span>
         </h1>
-        <div className="flex flex-col px-[36px] mb-[24px] gap-[20px] h-full overflow-y-scroll overflow-x-hidden">
-          <StockCard
-            symbol="AAPL"
-            setSelectedStock={setSelectedStock}
-            selectedStock={selectedStock}
-          />
-          <StockCard
-            symbol="GOOGL"
-            setSelectedStock={setSelectedStock}
-            selectedStock={selectedStock}
-          />
-          <StockCard
-            symbol="MSFT"
-            setSelectedStock={setSelectedStock}
-            selectedStock={selectedStock}
-          />
-          <StockCard
-            symbol="NVDA"
-            setSelectedStock={setSelectedStock}
-            selectedStock={selectedStock}
-          />
-          <StockCard
-            symbol="BBCA"
-            setSelectedStock={setSelectedStock}
-            selectedStock={selectedStock}
-          />
-          <StockCard
-            symbol="SHOP"
-            setSelectedStock={setSelectedStock}
-            selectedStock={selectedStock}
-          />
-          <StockCard
-            symbol="AAPL"
-            setSelectedStock={setSelectedStock}
-            selectedStock={selectedStock}
-          />
-        </div>
+        {!isLoading && stocks && (
+          <div className="flex flex-col px-[36px] gap-[20px] h-[500px] mb-auto overflow-x-hidden">
+            {stocks.map((item) => (
+              <StockCard
+                key={item.id}
+                symbol={item.symbol}
+                setSelectedStock={setSelectedStock}
+                selectedStock={selectedStock}
+              />
+            ))}
+          </div>
+        )}
         <div className="flex flex-col gap-[24px] px-[36px]">
           <button
             onClick={(e) => onInvestClick(e, selectedStock, QUERY_ITEM_DATA)}
