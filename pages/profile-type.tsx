@@ -64,7 +64,7 @@ const PROFILE_OPTIONS = {
   status: [
     {
       value: 1,
-      label: "Single",
+      label: "Married and having kids",
     },
     {
       value: 2,
@@ -72,7 +72,7 @@ const PROFILE_OPTIONS = {
     },
     {
       value: 3,
-      label: "Married and having kids",
+      label: "Single",
     },
   ],
 }
@@ -87,8 +87,10 @@ interface ProfileScore {
 
 const ProfileTypeQuiz = ({
   setUserProfile,
+  setShowResult,
 }: {
   setUserProfile: DispatchSetState<UserProfileType>
+  setShowResult: DispatchSetState<boolean>
 }) => {
   const [profileScore, setProfileScore] = useState<ProfileScore>({
     mastery: 1,
@@ -99,179 +101,174 @@ const ProfileTypeQuiz = ({
   })
 
   const [profileType, setProfileType] = useState<UserProfileType>()
-  const [test, setTest] = useState<number>()
 
   const onSubmitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (profileType) setUserProfile(profileType)
+    /*     if (profileType) setUserProfile(profileType) */
   }
 
   useEffect(() => {
-    const totalProfileScore =
-      profileScore.mastery * 0.2 +
-      profileScore.risk * 0.3 +
-      profileScore.duration * 0.2 +
-      profileScore.purpose * 0.15 +
-      profileScore.status * 0.15
+    const totalProfileScore = parseFloat(
+      (
+        profileScore.mastery * 0.2 +
+        profileScore.risk * 0.3 +
+        profileScore.duration * 0.2 +
+        profileScore.purpose * 0.15 +
+        profileScore.status * 0.15
+      ).toString()
+    )
 
-    if (totalProfileScore) setTest(totalProfileScore)
-
-    const test = parseFloat(totalProfileScore.toString())
-
-    if (test < 2.0) {
+    if (totalProfileScore < 2.0) {
       setProfileType("Conservative")
     }
 
-    if (test >= 2.0 && test < 3.0) {
+    if (totalProfileScore >= 2.0 && totalProfileScore < 3.0) {
       setProfileType("Moderate")
     }
 
-    if (test >= 3.0) {
+    if (totalProfileScore >= 3.0) {
       setProfileType("Aggresive")
     }
   }, [profileScore])
 
   return (
-    <>
-      <p className="text-black">{JSON.stringify(profileScore)}</p>
-      <p className="text-black">rerata: {test}</p>
-      <p className="text-black">profile: {profileType}</p>
-      <form
-        className="flex flex-col gap-[16px] bg-black/[0.03] text-black p-[24px] rounded-[20px] h-full"
-        onSubmit={(e) => onSubmitForm(e)}
-      >
-        <div className="flex flex-col gap-[8px]">
-          <label htmlFor="mastery" className="text-sm opacity-50 font-semibold">
-            How is your level of understanding and mastery on investing?
-          </label>
-          <select
-            id="mastery"
-            defaultValue={profileScore.mastery}
-            className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 text-[14px]"
-            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-              setProfileScore({
-                ...profileScore,
-                mastery: Number(e.target.value),
-              })
-            }
-          >
-            {PROFILE_OPTIONS.mastery.map((item) => (
-              <option value={item.value} key={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex flex-col gap-[8px]">
-          <label htmlFor="risk" className="text-sm opacity-50 font-semibold">
-            How is your risk view on your money that you invest?
-          </label>
-          <select
-            id="risk"
-            defaultValue={profileScore.risk}
-            className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 text-[14px]"
-            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-              setProfileScore({
-                ...profileScore,
-                risk: Number(e.target.value),
-              })
-            }
-          >
-            {PROFILE_OPTIONS.risk.map((item) => (
-              <option value={item.value} key={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex flex-col gap-[8px]">
-          <label
-            htmlFor="duration"
-            className="text-sm opacity-50 font-semibold"
-          >
-            How long do you intend to invest?
-          </label>
-          <select
-            id="duration"
-            defaultValue={profileScore.duration}
-            className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 text-[14px]"
-            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-              setProfileScore({
-                ...profileScore,
-                duration: Number(e.target.value),
-              })
-            }
-          >
-            {PROFILE_OPTIONS.duration.map((item) => (
-              <option value={item.value} key={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex flex-col gap-[8px]">
-          <label htmlFor="purpose" className="text-sm opacity-50 font-semibold">
-            What is the purpose of your investment?
-          </label>
-          <select
-            id="purpose"
-            defaultValue={profileScore.purpose}
-            className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 text-[14px]"
-            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-              setProfileScore({
-                ...profileScore,
-                purpose: Number(e.target.value),
-              })
-            }
-          >
-            {PROFILE_OPTIONS.purpose.map((item) => (
-              <option value={item.value} key={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex flex-col gap-[8px]">
-          <label htmlFor="status" className="text-sm opacity-50 font-semibold">
-            What is your current status?
-          </label>
-          <select
-            id="status"
-            defaultValue={profileScore.status}
-            className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 text-[14px]"
-            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-              setProfileScore({
-                ...profileScore,
-                status: Number(e.target.value),
-              })
-            }
-          >
-            {PROFILE_OPTIONS.status.map((item) => (
-              <option value={item.value} key={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mt-auto">
-          <button className="bg-black/10 text-black cursor-pointer font-semibold py-[10px] w-full h-[51px] rounded-full transition hover:bg-black/20">
-            Generate Profile
-          </button>
-        </div>
-      </form>
-    </>
+    <form
+      className="flex flex-col gap-[16px] bg-black/[0.03] text-black p-[24px] rounded-[20px] h-full"
+      onSubmit={(e) => onSubmitForm(e)}
+    >
+      <p>{profileType}</p>
+      <div className="flex flex-col gap-[8px]">
+        <label htmlFor="mastery" className="text-sm opacity-50 font-semibold">
+          How is your level of understanding and mastery on investing?
+        </label>
+        <select
+          id="mastery"
+          defaultValue={profileScore.mastery}
+          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 text-[14px]"
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setProfileScore({
+              ...profileScore,
+              mastery: Number(e.target.value),
+            })
+          }
+        >
+          {PROFILE_OPTIONS.mastery.map((item) => (
+            <option value={item.value} key={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex flex-col gap-[8px]">
+        <label htmlFor="risk" className="text-sm opacity-50 font-semibold">
+          How is your risk view on your money that you invest?
+        </label>
+        <select
+          id="risk"
+          defaultValue={profileScore.risk}
+          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 text-[14px]"
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setProfileScore({
+              ...profileScore,
+              risk: Number(e.target.value),
+            })
+          }
+        >
+          {PROFILE_OPTIONS.risk.map((item) => (
+            <option value={item.value} key={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex flex-col gap-[8px]">
+        <label htmlFor="duration" className="text-sm opacity-50 font-semibold">
+          How long do you intend to invest?
+        </label>
+        <select
+          id="duration"
+          defaultValue={profileScore.duration}
+          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 text-[14px]"
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setProfileScore({
+              ...profileScore,
+              duration: Number(e.target.value),
+            })
+          }
+        >
+          {PROFILE_OPTIONS.duration.map((item) => (
+            <option value={item.value} key={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex flex-col gap-[8px]">
+        <label htmlFor="purpose" className="text-sm opacity-50 font-semibold">
+          What is the purpose of your investment?
+        </label>
+        <select
+          id="purpose"
+          defaultValue={profileScore.purpose}
+          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 text-[14px]"
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setProfileScore({
+              ...profileScore,
+              purpose: Number(e.target.value),
+            })
+          }
+        >
+          {PROFILE_OPTIONS.purpose.map((item) => (
+            <option value={item.value} key={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex flex-col gap-[8px]">
+        <label htmlFor="status" className="text-sm opacity-50 font-semibold">
+          What is your current status?
+        </label>
+        <select
+          id="status"
+          defaultValue={profileScore.status}
+          className="border-[2px] border-black/10 h-[36px] pl-[12px] bg-transparent rounded-[6px] placeholder:text-black/30 text-[14px]"
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setProfileScore({
+              ...profileScore,
+              status: Number(e.target.value),
+            })
+          }
+        >
+          {PROFILE_OPTIONS.status.map((item) => (
+            <option value={item.value} key={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="mt-auto">
+        <button className="bg-black/10 text-black cursor-pointer font-semibold py-[10px] w-full h-[51px] rounded-full transition hover:bg-black/20">
+          Generate Profile
+        </button>
+      </div>
+    </form>
   )
 }
 
 const ProfileTypePage = () => {
   const { setUserProfile } = useContext(UserContext)
+  const [showResult, setShowResult] = useState<boolean>(false)
   return (
     <div className="px-[36px] pb-[36px] pt-[54px] flex flex-col h-full justify-between">
       <h1 className="text-black text-[36px] font-medium pb-[48px]">
         Let's get to know more about you
       </h1>
-      <ProfileTypeQuiz setUserProfile={setUserProfile} />
+      <ProfileTypeQuiz
+        setUserProfile={setUserProfile}
+        setShowResult={showResult}
+      />
     </div>
   )
 }
