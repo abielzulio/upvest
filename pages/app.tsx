@@ -127,10 +127,9 @@ const GoalItemCard = ({
               </button>
               <input
                 type="number"
-                value={topUp.amount}
                 defaultValue={topUp.amount}
                 className="border-[2px] border-black/10 h-[36px] pl-[12px] w-full bg-transparent rounded-[6px] placeholder:text-black/30 "
-                placeholder="Price amount"
+                placeholder="0"
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setTopUp({ ...topUp, amount: Number(e.target.value) })
                 }
