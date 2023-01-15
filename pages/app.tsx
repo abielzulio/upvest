@@ -63,7 +63,7 @@ const GoalItemCard = ({
     }
   }, [item.initial])
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const progress = Number(Number(percent).toFixed(2))
     if (progress >= 50 && progress <= 75) {
       setAdvised(true)
@@ -71,7 +71,7 @@ const GoalItemCard = ({
     if (progress > 75) {
       setAdvised(false)
     }
-  }, [item.initial])
+  }, [item.initial]) */
 
   const handleTopUp = () => {
     setItem({ ...item, initial: item.initial + topUp.amount })
@@ -99,7 +99,7 @@ const GoalItemCard = ({
   }
 
   return (
-    <div className="w-full flex flex-col gap-[5px] bg-white p-[24px] my-[15px] rounded-[10px] shadow-[0px_0px_20px_rgba(0,0,0,0.13)]">
+    <div className="w-full flex flex-col gap-[5px] bg-white p-[24px] my-[10px] rounded-[10px] shadow-[0px_0px_20px_rgba(0,0,0,0.13)]">
       <div className="flex justify-between">
         <p className="text-[18px] font-medium flex items-center gap-[10px]">
           {item?.name}
@@ -222,7 +222,6 @@ const GoalItemCard = ({
             ) : (
               <button
                 type="button"
-                /*                 onClick={() => setTopUp({ ...topUp, isShow: !topUp.isShow })} */
                 className={`${
                   isAdvised
                     ? `hover:bg-opacity-80 text-red-500 bg-red-200  h-[48px]`
@@ -253,6 +252,14 @@ const HomePage = () => {
   })
   const [withdraw, setWithdraw] = useState<boolean>(false)
 
+  const DUMMY = {
+    name: "Tuition fee",
+    initial: 500,
+    final: 2000,
+    spare: 100,
+    id: nanoid(),
+    stock: "AAPL",
+  }
   const QUERY_ITEM_DATA = router.query
 
   useEffect(() => {
@@ -288,11 +295,9 @@ const HomePage = () => {
     <>
       <Head title="Home | Upvest" />
       <div className="flex flex-col h-screen-safe bg-black">
-        <div className="h-fit flex flex-col gap-[15px] pb-[32px] justify-center items-center w-full text-white">
+        <div className="h-fit flex flex-col gap-[5px] pb-[32px] justify-center items-center w-full text-white">
           <div className="flex items-center h-fit w-full px-[24px] pt-[36px] justify-center">
-            {/*             <Icon.Setting /> */}
             <p className="opacity-50 font-semibold">Your balance</p>
-            {/*             <Icon.User /> */}
           </div>
           <p className="font-mono text-[64px] flex">
             {balanceType === "Invest" ? (
@@ -322,19 +327,11 @@ const HomePage = () => {
             />
           </div>
         </div>
-        <div className="w-full gap-[20px] flex flex-col h-screen-safe rounded-tl-[32px] rounded-tr-[32px] pt-[32px] pb-[32px] text-black bg-white/[0.95]">
+        <div className="w-full gap-[5px] flex flex-col h-screen-safe overflow-hidden rounded-tl-[32px] rounded-tr-[32px] pt-[32px] pb-[32px] text-black bg-white/[0.95]">
           <div className="flex items-center justify-between px-[32px]">
             <p className="text-[18px] font-medium opacity-80">My goals</p>
-            {/*             <Link href="/new">
-              <button
-                type="button"
-                className="opacity-50 hover:opacity-100 transition"
-              >
-                + Create new
-              </button>
-            </Link> */}
           </div>
-          <div className="flex flex-col px-[32px] h-full -mb-[10px]">
+          <div className="flex flex-col px-[32px] h-[500px] overflow-y-scroll -mb-[10px]">
             {QUERY_ITEM_DATA.name ? (
               <>
                 <GoalItemCard
@@ -343,6 +340,63 @@ const HomePage = () => {
                   setItem={setItem}
                   setWithdraw={setWithdraw}
                 />
+                <div className="w-full flex flex-col gap-[5px] bg-white p-[24px] my-[10px] rounded-[10px] shadow-[0px_0px_20px_rgba(0,0,0,0.13)]">
+                  <div className="flex justify-between">
+                    <p className="text-[18px] font-medium flex items-center gap-[10px]">
+                      {DUMMY.name}
+                    </p>
+                    <p className="font-mono">
+                      ${DUMMY.initial.toLocaleString()}
+                      <span className="opacity-50">
+                        /${DUMMY.final.toLocaleString()}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="flex justify-between">
+                    <p className="text-[12px] opacity-50">
+                      {new Date().toLocaleDateString()}
+                    </p>
+                    <p className="text-[10px] bg-black/10 px-[8px] py-[2px] rounded-full font-mono font-medium tracking-wide">
+                      {DUMMY.stock}
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-[8px] mt-[15px] my-[10px]">
+                    <div className="relative h-[5px] w-full flex items-center justify-start">
+                      <span
+                        className={`bg-red-500 h-full rounded-full z-10 absolute`}
+                        style={{
+                          width: `${
+                            (Number(DUMMY.initial) / Number(DUMMY.final)) * 100
+                          }%`,
+                        }}
+                      />
+                      <span className="bg-black/[0.08] rounded-full w-full h-full" />
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <p className={`text-red-500`}>
+                        {Number(
+                          (Number(DUMMY.initial) / Number(DUMMY.final)) * 100
+                        ).toFixed(2)}
+                        %
+                      </p>
+                      <p className="text-black opacity-50 font-medium text-[12px]">
+                        8 month
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className={`bg-black hover:bg-opacity-80 transition font-medium text-[14px] h-[48px] text-white rounded-full`}
+                  >
+                    Add Investment
+                  </button>
+                  <button
+                    type="button"
+                    className={`hover:bg-opacity-80 text-red-500 bg-red-200  h-[48px] transition font-medium text-[14px] mt-[10px] rounded-full`}
+                  >
+                    Advised to Withdraw
+                  </button>
+                </div>
               </>
             ) : (
               <GoalItemCard
