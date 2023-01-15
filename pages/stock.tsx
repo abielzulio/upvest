@@ -1,6 +1,5 @@
 import Head from "components/Head"
 import UserContext from "context/user"
-import { initial } from "lodash"
 import { useRouter } from "next/router"
 import { FormEvent, useContext, useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
@@ -16,13 +15,11 @@ interface Stock {
 const StockCard = ({
   symbol,
   gain,
-  amount,
   selectedStock,
   setSelectedStock,
 }: {
   symbol: string
   gain: number
-  amount: { initial: number; final: number; spare: number }
   selectedStock: string | undefined
   setSelectedStock: DispatchSetState<string | undefined>
 }) => {
@@ -36,12 +33,6 @@ const StockCard = ({
         <p className="font-mono text-[12px] opacity-50">
           {gain.toFixed(2) + `%` ?? `3 month 2 week`}
         </p>
-        {/*         <p className="font-mono text-[12px] opacity-50">
-          {(
-            Math.log(amount.price / amount.initial) / Math.log(1 + gain / 100)
-          ).toFixed(0)}{" "}
-          tahun
-        </p> */}
       </div>
       {selectedStock === symbol ? (
         <span className="border-[1px] flex items-center justify-center text-[10px] border-green-500 rounded-full h-[20px] w-[20px] bg-green-500 text-white">
@@ -125,11 +116,6 @@ const StockRecommendationPage = () => {
                   key={item.id}
                   symbol={item.symbol}
                   gain={item.gain}
-                  amount={{
-                    initial: Number(initial),
-                    final: Number(final),
-                    spare: Number(spare),
-                  }}
                   setSelectedStock={setSelectedStock}
                   selectedStock={selectedStock}
                 />
