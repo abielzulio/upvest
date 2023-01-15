@@ -303,7 +303,9 @@ const HomePage = () => {
             {balanceType === "Invest" ? (
               <>
                 <span className="text-[32px] opacity-50 mt-[15px]">$</span>
-                {withdraw ? `0` : Number(item.initial ?? 0).toLocaleString()}
+                {withdraw
+                  ? `500`
+                  : (500 + Number(item.initial ?? 0)).toLocaleString()}
               </>
             ) : (
               <>
