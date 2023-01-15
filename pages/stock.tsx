@@ -110,7 +110,7 @@ const StockRecommendationPage = () => {
           </div>
         ) : (
           stocks && (
-            <div className="flex flex-col px-[36px] gap-[20px] mb-auto h-[500px] overflow-y-scroll">
+            <div className="flex flex-col px-[36px] gap-[20px] mb-auto h-[400px] overflow-y-scroll">
               {stocks.map((item) => (
                 <StockCard
                   key={item.id}

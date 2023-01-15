@@ -331,7 +331,7 @@ const HomePage = () => {
           <div className="flex items-center justify-between px-[32px]">
             <p className="text-[18px] font-medium opacity-80">My goals</p>
           </div>
-          <div className="flex flex-col px-[32px] h-[500px] overflow-y-scroll -mb-[10px]">
+          <div className="flex flex-col px-[32px] h-[500px] mb-[40px] pb-[40px] overflow-y-scroll">
             {QUERY_ITEM_DATA.name ? (
               <>
                 <GoalItemCard
