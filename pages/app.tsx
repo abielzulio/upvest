@@ -1,11 +1,9 @@
 import Head from "components/Head"
-import * as Icon from "components/Icon"
-import UserContext from "context/user"
 import { nanoid } from "nanoid"
 import { useRouter } from "next/router"
-import { ChangeEvent, useContext, useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
-import { DispatchSetState, Item, Maybe } from "type"
+import { DispatchSetState, Item } from "type"
 
 type BalanceType = "Invest" | "Bank"
 
