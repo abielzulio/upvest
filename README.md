@@ -5,7 +5,7 @@
 
 ## Description
 
-Online investing platform with ML-based micro-investment tracker
+Online investing platform with ML-based micro-investment tracker. UpVest let users can make its initial investment, then UpVest will manage their funds, with integrated system to RHB bank account. UpVest has three unique selling points, namely automated risk profiling feature to personalize stock recommendation for user, goal-based investment to trigger more fun investment activity, and real-time stock performance updates to provide daily advice.
 
 ## Preview
 
