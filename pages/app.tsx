@@ -52,26 +52,38 @@ const GoalItemCard = ({
     isShow: false,
   })
   const percent =
-    (item.initial &&
-      item.final &&
-      `${(Number(item.initial) / Number(item.final)) * 100}`) ||
-    `10%`
+    item.initial &&
+    item.final &&
+    `${(Number(item.initial) / Number(item.final)) * 100}`
 
   useEffect(() => {
     if (item.initial > item.final) {
-      toast.success(`${item.name}'s investment is ready to withdraw`)
+      toast.success(`${item.name}'s investment goal is achieved!`)
       setItem({ ...item, success: true })
     }
   }, [item.initial])
 
   const handleTopUp = () => {
     setItem({ ...item, initial: item.initial + topUp.amount })
-    toast.success(`$${topUp.amount} is succesfully invested`)
+    toast.success(`$${topUp.amount} is succesfully invested!`)
   }
 
   const handleWithdraw = () => {
-    toast.success(`$${topUp.amount} is succesfully withdrawn`)
+    toast.success(`$${topUp.amount} is succesfully withdrawn!`)
     setWithdraw((prev) => !prev)
+  }
+
+  const dateParser = (final: number, initial: number): string => {
+    const total = (
+      ((Number(final) - Number(initial)) / Number(final)) *
+      12
+    ).toFixed(2)
+    const month = total.split(".")[0]
+    const day = (Number(total.split(".")[1]) / 100) * 30
+
+    return initial < final
+      ? `${month} month${day === 0 ? undefined : `, ${day} day more`}`
+      : `Your target is achieved!`
   }
 
   return (
@@ -86,7 +98,9 @@ const GoalItemCard = ({
         </p>
       </div>
       <div className="flex justify-between">
-        <p className="text-[12px] opacity-50">11/11/2023</p>
+        <p className="text-[12px] opacity-50">
+          {new Date().toLocaleDateString()}
+        </p>
         <p className="text-[10px] bg-black/10 px-[8px] py-[2px] rounded-full font-mono font-medium tracking-wide">
           {item?.stock}
         </p>
@@ -108,7 +122,7 @@ const GoalItemCard = ({
                 {Number(percent).toFixed(2)}%
               </p>
               <p className="text-black opacity-50 font-medium text-[12px]">
-                1 more months
+                {dateParser(item.final, item.initial)}
               </p>
             </div>
           </div>
@@ -163,11 +177,11 @@ const GoalItemCard = ({
           >
             {topUp.isShow
               ? topUp.amount === 0
-                ? `Input your top-up amount`
-                : `Click to Top-up $${topUp.amount}`
+                ? `Input your investment amount`
+                : `Click to Invest $${topUp.amount} tino ${item.stock}`
               : item.success
-              ? `Withdraw`
-              : `Top-up`}
+              ? `Withdraw Investment`
+              : `Add Investment`}
           </button>
           {topUp.isShow && (
             <button
