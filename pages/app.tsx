@@ -70,7 +70,7 @@ const GoalItemCard = ({
     if (progress >= 50 && progress <= 75) {
       setAdvised(true)
     }
-    if (progress >= 75) {
+    if (progress > 75) {
       setAdvised(false)
     }
   }, [item.initial])
