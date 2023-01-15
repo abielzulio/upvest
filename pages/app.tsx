@@ -51,15 +51,24 @@ const GoalItemCard = ({
     amount: 0,
     isShow: false,
   })
+  const [isAdvised, setAdvised] = useState<boolean>(false)
+
   const percent =
     item.initial &&
     item.final &&
-    `${(Number(item.initial) / Number(item.final)) * 100}`
+    (`${(Number(item.initial) / Number(item.final)) * 100}` as string)
 
   useEffect(() => {
     if (item.initial > item.final) {
       toast.success(`${item.name}'s investment goal is achieved!`)
       setItem({ ...item, success: true })
+    }
+  }, [item.initial])
+
+  useEffect(() => {
+    const progress = Number(Number(percent).toFixed(2))
+    if (progress >= 50 && progress <= 75) {
+      setAdvised(true)
     }
   }, [item.initial])
 
@@ -82,7 +91,9 @@ const GoalItemCard = ({
     const day = (Number(total.split(".")[1]) / 100) * 30
 
     return initial < final
-      ? `${month} month${day === 0 ? undefined : `, ${day} day more`}`
+      ? `${month} month${
+          day === 0 || day === undefined ? `` : `, ${day.toFixed(0)} day`
+        } more`
       : `Your target is achieved!`
   }
 
@@ -110,7 +121,9 @@ const GoalItemCard = ({
           <div className="flex flex-col gap-[8px] mt-[15px] my-[10px]">
             <div className="relative h-[5px] w-full flex items-center justify-start">
               <span
-                className="bg-green-500 h-full rounded-full z-10 absolute"
+                className={`${
+                  isAdvised ? `bg-red-500` : `bg-green-500`
+                } h-full rounded-full z-10 absolute`}
                 style={{
                   width: item?.success ? `100%` : `${percent}%`,
                 }}
@@ -118,7 +131,11 @@ const GoalItemCard = ({
               <span className="bg-black/[0.08] rounded-full w-full h-full" />
             </div>
             <div className="flex justify-between items-center">
-              <p className="text-green-500 text-[14px]">
+              <p
+                className={`${
+                  isAdvised ? `text-red-500` : `text-green-500`
+                } text-[14px]`}
+              >
                 {Number(percent).toFixed(2)}%
               </p>
               <p className="text-black opacity-50 font-medium text-[12px]">
@@ -178,7 +195,7 @@ const GoalItemCard = ({
             {topUp.isShow
               ? topUp.amount === 0
                 ? `Input your investment amount`
-                : `Click to Invest $${topUp.amount} tino ${item.stock}`
+                : `Click to Invest $${topUp.amount} in ${item.stock}`
               : item.success
               ? `Withdraw Investment`
               : `Add Investment`}
@@ -192,15 +209,28 @@ const GoalItemCard = ({
               Cancel
             </button>
           )}
-          {!topUp.isShow && item.success && (
-            <button
-              type="button"
-              onClick={() => setTopUp({ ...topUp, isShow: !topUp.isShow })}
-              className="text-[14px] opacity-50 mt-[10px]"
-            >
-              Top-up
-            </button>
-          )}
+          {!topUp.isShow &&
+            (item.success ? (
+              <button
+                type="button"
+                onClick={() => setTopUp({ ...topUp, isShow: !topUp.isShow })}
+                className="text-[14px] opacity-50 mt-[10px]"
+              >
+                Top-up
+              </button>
+            ) : (
+              <button
+                type="button"
+                /*                 onClick={() => setTopUp({ ...topUp, isShow: !topUp.isShow })} */
+                className={`${
+                  isAdvised
+                    ? `hover:bg-opacity-80 text-red-500 bg-red-200  h-[48px]`
+                    : `text-black opacity-50 underline hover:opacity-100`
+                } transition font-medium text-[14px] mt-[10px] rounded-full`}
+              >
+                {isAdvised ? `Advised to Withdraw` : `Withdraw`}
+              </button>
+            ))}
         </>
       ) : (
         <p className="text-green-500 text-[14px]">Withdrawn</p>
